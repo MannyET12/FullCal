@@ -18,7 +18,7 @@ namespace FullCal.Data
 
     public class DAL : IDAL
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db = new();
 
         public List<Event> GetEvents()
         {
