@@ -36,6 +36,7 @@ namespace FullCal.Models
 
         //Relational data
         public virtual Process Process { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         public Event(IFormCollection form, Process process)
         {
