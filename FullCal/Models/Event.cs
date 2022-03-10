@@ -9,7 +9,8 @@ namespace FullCal.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ProcessName { get; set; }
+        [Display(Name ="Process Name")]
+        public string? ProcName { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
         public string Calibration { get; set; }
@@ -19,54 +20,42 @@ namespace FullCal.Models
         public DateTime CreatedDate { get; set; }
         [DisplayName("Close Date")]
         public DateTime ClosingDate { get; set; }
-        [Range(1, 31, ErrorMessage = "Please enter a value between 1 and 31")]
-        //public int Days { get; set; }
-        //public int Month { get; set; }
-        //public int Year { get; set; }
-        //public Status StatusID { get; set; }
-        //[Display(Name = "Status")]
         public string CurrentStatus { get; set; }
-
-        //public enum Status
-        //{
-        //    OK,
-        //    Imminent,
-        //    Overdue
-        //}
 
         //Relational data
         public virtual Process Process { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser? User { get; set; }
 
         public Event(IFormCollection form, Process process)
         {
-            Id = int.Parse(form["Id"]);
-            Name = form["Name"];
-            Description = form["Description"];
-            ProcessName = form["ProcessName"];
-            Location = form["Location"];
-            Calibration = form["Calibration"];
-            CalibrationStatus = form["CalibrationStatus"];
-            Responsible = form["Responsible"];
-            CreatedDate = DateTime.Parse(form["CreatedDate"]);
-            ClosingDate = DateTime.Parse(form["ClosingDate"]);
-            CurrentStatus = form["CurrentStatus"];
+            //Id = int.Parse(form["Id"]);
+            Name = form["Event.Name"].ToString();
+            Description = form["Event.Description"].ToString();
+            ProcName = form["Event.ProcName"].ToString();
+            Location = form["Event.Location"].ToString();
+            Calibration = form["Event.Calibration"].ToString();
+            CalibrationStatus = form["Event.CalibrationStatus"].ToString();
+            Responsible = form["Event.Responsible"].ToString();
+            
+            CreatedDate = DateTime.Parse(form["Event.CreatedDate"].ToString());
+            ClosingDate = DateTime.Parse(form["Event.ClosingDate"].ToString());
+            CurrentStatus = form["Event.CurrentStatus"].ToString();
             Process = process;
         }
 
         public void UpdateEvent(IFormCollection form, Process process)
         {
-            Id = int.Parse(form["Id"]);
-            Name = form["Name"];
-            Description = form["Description"];
-            ProcessName = form["ProcessName"];
-            Location = form["Location"];
-            Calibration = form["Calibration"];
-            CalibrationStatus = form["CalibrationStatus"];
-            Responsible = form["Responsible"];
-            CreatedDate = DateTime.Parse(form["CreatedDate"]);
-            ClosingDate = DateTime.Parse(form["ClosingDate"]);
-            CurrentStatus = form["CurrentStatus"];
+            //Id = int.Parse(form["Event.Id"]);
+            Name = form["Event.Name"];
+            Description = form["Event.Description"];
+            ProcName = form["Event.ProcName"];
+            Location = form["Event.Location"];
+            Calibration = form["Event.Calibration"];
+            CalibrationStatus = form["Event.CalibrationStatus"];
+            Responsible = form["Event.Responsible"];
+            CreatedDate = DateTime.Parse(form["Event.CreatedDate"]);
+            ClosingDate = DateTime.Parse(form["Event.ClosingDate"]);
+            CurrentStatus = form["Event.CurrentStatus"];
             Process = process;
         }
 

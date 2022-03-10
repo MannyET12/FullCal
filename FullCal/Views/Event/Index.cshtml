@@ -1,5 +1,102 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<FullCal.Models.Event>
+
 @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h1>Audit Control</h1>
+
+@if (ViewData["Alert"] != null)
+{
+    <h3>@ViewData["Alert"]</h3>
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProcName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calibration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CalibrationStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Responsible)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClosingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Process.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProcName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Calibration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CalibrationStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Responsible)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClosingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Process)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

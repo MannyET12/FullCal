@@ -4,6 +4,7 @@ using FullCal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullCal.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309214559_soretedissues")]
+    partial class soretedissues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,11 +127,12 @@ namespace FullCal.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProcName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProcessId")
+                    b.Property<int>("ProcessId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ProcessName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Responsible")
                         .IsRequired()
@@ -309,7 +312,9 @@ namespace FullCal.Data.Migrations
                 {
                     b.HasOne("FullCal.Models.Process", "Process")
                         .WithMany("Events")
-                        .HasForeignKey("ProcessId");
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FullCal.Models.ApplicationUser", "User")
                         .WithMany("Events")

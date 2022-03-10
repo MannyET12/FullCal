@@ -10,6 +10,7 @@ namespace FullCal.Models
         public string Description { get; set; }
 
         // Relational Data
+        //made nullable for create to work
         public virtual ICollection<Event> Events { get; set; }
     }
 }

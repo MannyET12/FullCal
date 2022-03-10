@@ -18,7 +18,7 @@ namespace FullCal.Data
 
     public class DAL : IDAL
     {
-        private ApplicationDbContext db = new();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public List<Event> GetEvents()
         {
@@ -34,14 +34,17 @@ namespace FullCal.Data
         }
         public void CreateEvent(IFormCollection form)
         {
-            var newevent = new Event(form, db.Processes.FirstOrDefault(m => m.Name == form["Process"]));
+            var procname = form["Process"].ToString();
+            var newevent = new Event(form, db.Processes.FirstOrDefault(m => m.Name == procname));
             db.Events.Add(newevent);
             db.SaveChanges();
         }
         public void UpdateEvent(IFormCollection form)
         {
-            var myevent = db.Events.FirstOrDefault(m => m.Id == int.Parse(form["Id"]));
-            var process = db.Processes.FirstOrDefault(m => m.Name == form["Process"]);
+            var procname = form["Process"].ToString();
+            var eventid = int.Parse(form["Event.Id"]);
+            var myevent = db.Events.FirstOrDefault(m => m.Id == eventid);
+            var process = db.Processes.FirstOrDefault(m => m.Name == procname);
             myevent.UpdateEvent(form, process);
             db.Entry<Event>(myevent).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             db.SaveChanges();

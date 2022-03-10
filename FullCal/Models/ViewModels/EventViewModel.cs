@@ -6,7 +6,7 @@ namespace FullCal.Models.ViewModels
     public class EventViewModel
     {
         public Event Event { get; set; }
-        public List<SelectListItem> Process { get; set; }
+        public List<SelectListItem> Process = new List<SelectListItem>();
         public string ProcessName { get; set; }
 
         public EventViewModel(Event myEvent, List<Process> processes)
@@ -16,7 +16,6 @@ namespace FullCal.Models.ViewModels
             foreach (var proc in processes)
             {
                 Process.Add(new SelectListItem() { Text = proc.Name });
-
             }
         }
 
@@ -25,8 +24,12 @@ namespace FullCal.Models.ViewModels
             foreach (var proc in processes)
             {
                 Process.Add(new SelectListItem() { Text = proc.Name });
-
             }
+        }
+
+        public EventViewModel()
+        {
+
         }
     }
 }

@@ -1,0 +1,100 @@
+﻿@model FullCal.Models.ViewModels.EventViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var myobj = new Event();
+}
+
+<h1>Create</h1>
+
+<h4>Event</h4>
+
+@if (TempData["Alert"] != null)
+{
+    ViewData["Alert"] = TempData["Alert"];
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        
+        <form asp-action="Create" id="create-event">
+            @Html.HiddenFor(m => m.Event.Id)
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Event.Name" class="control-label"></label>
+                <input asp-for="Event.Name" class="form-control" />
+                <span asp-validation-for="Event.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.ProcName" class="control-label"></label>
+                <input asp-for="Event.ProcName" class="form-control" />
+                <span asp-validation-for="Event.ProcName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.Description" class="control-label"></label>
+                <input asp-for="Event.Description" class="form-control" />
+                <span asp-validation-for="Event.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.Location" class="control-label"></label>
+                <input asp-for="Event.Location" class="form-control" />
+                <span asp-validation-for="Event.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.Calibration" class="control-label"></label>
+                <input asp-for="Event.Calibration" class="form-control" />
+                <span asp-validation-for="Event.Calibration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.CalibrationStatus" class="control-label"></label>
+                <input asp-for="Event.CalibrationStatus" class="form-control" />
+
+                <span asp-validation-for="Event.CalibrationStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.Responsible" class="control-label"></label>
+                <input asp-for="Event.Responsible" class="form-control" />
+                <span asp-validation-for="Event.Responsible" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.CreatedDate" class="control-label"></label>
+                <input asp-for="Event.CreatedDate" class="form-control" />
+                <span asp-validation-for="Event.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.ClosingDate" class="control-label"></label>
+                <input asp-for="Event.ClosingDate" class="form-control" />
+                <span asp-validation-for="Event.ClosingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.CurrentStatus" class="control-label"></label>
+                <input asp-for="Event.CurrentStatus" class="form-control" />
+                <span asp-validation-for="Event.CurrentStatus" class="text-danger"></span>
+            </div>
+            @*            <div>
+                <label asp-for="Process" class="control-label"></label>
+                <select asp-for="Process" asp-items="Model.Process"></select>
+                <span asp-validation-for="Process" class="text-danger"></span>
+                </div>*@
+
+            <div class="form-group">
+                <label>Process</label>
+                @Html.DropDownList("Process",Model.Process,"Select a Process",new{@class="form-control required"})
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
