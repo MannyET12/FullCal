@@ -9,9 +9,9 @@
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: [
-        ]
-    });
+        events: @Html.Raw(ViewData["Events"]),
+         resources: @Html.Raw(ViewData["Resources"])
+});
 
-    calendar.render();
+calendar.render();
 });

@@ -70,7 +70,6 @@ namespace FullCal.Controllers
             }
             catch (Exception ex)
             {
-                
                 TempData["Alert"] = "An error occured: " + ex.Message;
                 return View(vm);
             }
@@ -89,7 +88,8 @@ namespace FullCal.Controllers
             {
                 return NotFound();
             }
-            return View(@event);
+            var vm = new EventViewModel(@event,_dal.GetProcesses());
+            return View(vm);
         }
 
         // POST: Event/Edit/5

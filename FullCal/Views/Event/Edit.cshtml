@@ -1,4 +1,4 @@
-﻿@model FullCal.Models.Event
+﻿@model FullCal.Models.ViewModels.EventViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,56 +13,60 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Event.Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Event.Name" class="control-label"></label>
+                <input asp-for="Event.Name" class="form-control" />
+                <span asp-validation-for="Event.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProcName" class="control-label"></label>
-                <input asp-for="ProcName" class="form-control" />
-                <span asp-validation-for="ProcName" class="text-danger"></span>
+                <label asp-for="Event.ProcName" class="control-label"></label>
+                <input asp-for="Event.ProcName" class="form-control" />
+                <span asp-validation-for="Event.ProcName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Event.Description" class="control-label"></label>
+                <input asp-for="Event.Description" class="form-control" />
+                <span asp-validation-for="Event.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
+                <label asp-for="Event.Location" class="control-label"></label>
+                <input asp-for="Event.Location" class="form-control" />
+                <span asp-validation-for="Event.Location" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Calibration" class="control-label"></label>
-                <input asp-for="Calibration" class="form-control" />
-                <span asp-validation-for="Calibration" class="text-danger"></span>
+                <label asp-for="Event.Calibration" class="control-label"></label>
+                <input asp-for="Event.Calibration" class="form-control" />
+                <span asp-validation-for="Event.Calibration" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CalibrationStatus" class="control-label"></label>
-                <input asp-for="CalibrationStatus" class="form-control" />
-                <span asp-validation-for="CalibrationStatus" class="text-danger"></span>
+                <label asp-for="Event.CalibrationStatus" class="control-label"></label>
+                <input asp-for="Event.CalibrationStatus" class="form-control" />
+                <span asp-validation-for="Event.CalibrationStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Responsible" class="control-label"></label>
-                <input asp-for="Responsible" class="form-control" />
-                <span asp-validation-for="Responsible" class="text-danger"></span>
+                <label asp-for="Event.Responsible" class="control-label"></label>
+                <input asp-for="Event.Responsible" class="form-control" />
+                <span asp-validation-for="Event.Responsible" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                <label asp-for="Event.CreatedDate" class="control-label"></label>
+                <input asp-for="Event.CreatedDate" class="form-control" />
+                <span asp-validation-for="Event.CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ClosingDate" class="control-label"></label>
-                <input asp-for="ClosingDate" class="form-control" />
-                <span asp-validation-for="ClosingDate" class="text-danger"></span>
+                <label asp-for="Event.ClosingDate" class="control-label"></label>
+                <input asp-for="Event.ClosingDate" class="form-control" />
+                <span asp-validation-for="Event.ClosingDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CurrentStatus" class="control-label"></label>
-                <input asp-for="CurrentStatus" class="form-control" />
-                <span asp-validation-for="CurrentStatus" class="text-danger"></span>
+                <label asp-for="Event.CurrentStatus" class="control-label"></label>
+                <input asp-for="Event.CurrentStatus" class="form-control" />
+                <span asp-validation-for="Event.CurrentStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Process</label>
+                @Html.DropDownList("Process",Model.Process,"Select a Process",new{@class="form-control required"})
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -71,10 +75,31 @@
     </div>
 </div>
 
+<script>
+     function SetSelectedProcess(Process)
+     {
+        var locations = document.getElementById('Process'), proc, i;
+        for (i = 0; i < locations.length; i++) {
+            proc = locations[i];
+            if (proc.innerText === Process) {
+                proc.selected = "true";
+            }
+        }
+    }
+
+    var process = "@Html.Raw(Model.ProcessName)";
+
+    document.addEventListener('DOMContentLoaded', function () {
+        SetSelectedProcess(process);
+    });
+</script>
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

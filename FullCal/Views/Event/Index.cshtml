@@ -1,22 +1,26 @@
 ﻿@model IEnumerable<FullCal.Models.Event>
 
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var newobj = new Process();
 }
 
 <h1>Audit Control</h1>
 
 @if (ViewData["Alert"] != null)
-{
-    <h3>@ViewData["Alert"]</h3>
-}
+            {
+                <h3>@ViewData["Alert"]</h3>
+            }
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
+        
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -49,7 +53,7 @@
                 @Html.DisplayNameFor(model => model.CurrentStatus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Process.Name)
+                @Html.DisplayNameFor(model => model.Process)
             </th>
             <th></th>
         </tr>
@@ -89,7 +93,7 @@
                     @Html.DisplayFor(modelItem => item.CurrentStatus)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Process)
+                    @Html.DisplayFor(modelItem => item.Process.Name)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

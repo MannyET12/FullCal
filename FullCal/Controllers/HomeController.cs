@@ -1,4 +1,5 @@
 ﻿using FullCal.Data;
+using FullCal.Helpers;
 using FullCal.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -18,7 +19,9 @@ namespace FullCal.Controllers
 
         public IActionResult Index()
         {
-            var myevent = _idal.GetEvent(1);
+            //var myevent = _idal.GetEvent(1);
+            ViewData["Resources"] = JSONListhelper.GetResourceListJSONString(_idal.GetProcesses());
+            ViewData["Events"] = JSONListhelper.GetEventListJSONString(_idal.GetEvents());
             return View();
         }
 
