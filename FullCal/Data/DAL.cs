@@ -35,7 +35,11 @@ namespace FullCal.Data
         public void CreateEvent(IFormCollection form)
         {
             var procname = form["Process"].ToString();
-            var newevent = new Event(form, db.Processes.FirstOrDefault(m => m.Name == procname));
+            var username = form["UserId"].ToString();
+
+            var user = db.Users.FirstOrDefault(m => m.Id == username);
+
+            var newevent = new Event(form, db.Processes.FirstOrDefault(m => m.Name == procname), user);
             db.Events.Add(newevent);
             db.SaveChanges();
         }
@@ -43,10 +47,14 @@ namespace FullCal.Data
         {
             var procname = form["Process"].ToString();
             var eventid = int.Parse(form["Event.Id"]);
+            var username = form["UserId"].ToString();
+
             var myevent = db.Events.FirstOrDefault(m => m.Id == eventid);
             var process = db.Processes.FirstOrDefault(m => m.Name == procname);
-            myevent.UpdateEvent(form, process);
-            db.Entry<Event>(myevent).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var user = db.Users.FirstOrDefault(p => p.Id == username);
+
+            myevent.UpdateEvent(form, process,user);
+            db.Entry(myevent).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             db.SaveChanges();
         }
         public void DeleteEvent(int id)

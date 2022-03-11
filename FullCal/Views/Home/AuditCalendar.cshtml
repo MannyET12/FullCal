@@ -1,15 +1,14 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+        ViewData["Title"] = "Audit Calendar";
+
 }
-
-<
-
-<p></p>
 <head>
     <meta charset='utf-8' />
     <link rel="stylesheet" href="~/css/main.css" />
     <script src="~/js/main.js"></script>
-    @*@*<script src="~/js/Calendar.js"> </script>*@
 
     <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -28,7 +27,7 @@
                 events: @Html.Raw(ViewData["Events"]),
                 //loading in resources
                 resources: @Html.Raw(ViewData["Resources"]),
-                eventClick: function(info) {
+                 eventClick: function(info) {
                 var eventObj = info.event;
                 if (eventObj.url)
                 {
@@ -36,7 +35,7 @@
                     window.open(eventObj.url);
                     info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
                   } else {
-                    alert( eventObj.title);
+                    alert(eventObj.title);
                   }
                 },
 
@@ -45,10 +44,10 @@
         });
     </script>
 </head>
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-        <a href="/AuditCalendar"><h3>View Audit Calendar</h3></a>
-</div>
+<body>
+    <div id='calendar'></div>
+
+</body>
 
 
 <div class="row">

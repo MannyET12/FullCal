@@ -14,7 +14,7 @@
                     end = model.ClosingDate,
                     resourceId = model.Process.Id,
                     description = model.Description,
-                    title = model.Process.Name
+                    title = model.Name
                 };
                 evenlist.Add(myevent);
             }

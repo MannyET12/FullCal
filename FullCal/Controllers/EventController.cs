@@ -9,16 +9,20 @@ using Microsoft.EntityFrameworkCore;
 using FullCal.Data;
 using FullCal.Models;
 using FullCal.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace FullCal.Controllers
 {
     public class EventController : Controller
     {
         private readonly IDAL _dal;
+        private readonly UserManager<ApplicationUser> _usermanager;
 
-        public EventController(IDAL dal)
+        public EventController(IDAL dal, UserManager<ApplicationUser> usermanager)
         {
             _dal = dal;
+            _usermanager = usermanager;
         }
 
         // GET: Event
@@ -28,7 +32,7 @@ namespace FullCal.Controllers
             {
                 ViewData["Alert"] = TempData["Alert"];
             }
-            return View(_dal.GetEvents());
+            return View(_dal.GetMyEvents(User.FindFirstValue(ClaimTypes.NameIdentifier)));
         }
 
         // GET: Event/Details/5
@@ -51,7 +55,7 @@ namespace FullCal.Controllers
         // GET: Event/Create
         public IActionResult Create()
         {
-            return View(new EventViewModel(_dal.GetProcesses()));
+            return View(new EventViewModel(_dal.GetProcesses(), User.FindFirstValue(ClaimTypes.NameIdentifier)));
         }
 
         // POST: Event/Create
@@ -88,7 +92,7 @@ namespace FullCal.Controllers
             {
                 return NotFound();
             }
-            var vm = new EventViewModel(@event,_dal.GetProcesses());
+            var vm = new EventViewModel(@event,_dal.GetProcesses(), User.FindFirstValue(ClaimTypes.NameIdentifier));
             return View(vm);
         }
 
@@ -108,7 +112,7 @@ namespace FullCal.Controllers
             catch (Exception ex)
             {
                 ViewData["Alert"] = "An error occured" + ex.Message;
-                var vm = new EventViewModel(_dal.GetEvent(id),_dal.GetProcesses());
+                var vm = new EventViewModel(_dal.GetEvent(id),_dal.GetProcesses(), User.FindFirstValue(ClaimTypes.NameIdentifier));
                 return View(vm);
             }
 

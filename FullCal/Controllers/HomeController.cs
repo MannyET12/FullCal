@@ -1,8 +1,11 @@
 ﻿using FullCal.Data;
 using FullCal.Helpers;
 using FullCal.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace FullCal.Controllers
 {
@@ -10,11 +13,13 @@ namespace FullCal.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IDAL _idal;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, IDAL idal)
+        public HomeController(ILogger<HomeController> logger, IDAL idal, UserManager<ApplicationUser> usermanager)
         {
             _logger = logger;
             _idal = idal;
+            _userManager = usermanager;
         }
 
         public IActionResult Index()
@@ -22,6 +27,14 @@ namespace FullCal.Controllers
             //var myevent = _idal.GetEvent(1);
             ViewData["Resources"] = JSONListhelper.GetResourceListJSONString(_idal.GetProcesses());
             ViewData["Events"] = JSONListhelper.GetEventListJSONString(_idal.GetEvents());
+            return View();
+        }
+        [Authorize]
+        public IActionResult AuditCalendar()
+        {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["Resources"] = JSONListhelper.GetResourceListJSONString(_idal.GetProcesses());
+            ViewData["Events"] = JSONListhelper.GetEventListJSONString(_idal.GetMyEvents(userid));
             return View();
         }
 

@@ -9,7 +9,7 @@ namespace FullCal.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        [Display(Name ="Process Name")]
+        [Display(Name = "Process Name")]
         public string? ProcName { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
@@ -24,11 +24,12 @@ namespace FullCal.Models
 
         //Relational data
         public virtual Process Process { get; set; }
-        public virtual ApplicationUser? User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
-        public Event(IFormCollection form, Process process)
+        public Event(IFormCollection form, Process process, ApplicationUser user)
         {
             //Id = int.Parse(form["Id"]);
+            User = user;
             Name = form["Event.Name"].ToString();
             Description = form["Event.Description"].ToString();
             ProcName = form["Event.ProcName"].ToString();
@@ -36,16 +37,18 @@ namespace FullCal.Models
             Calibration = form["Event.Calibration"].ToString();
             CalibrationStatus = form["Event.CalibrationStatus"].ToString();
             Responsible = form["Event.Responsible"].ToString();
-            
+
             CreatedDate = DateTime.Parse(form["Event.CreatedDate"].ToString());
             ClosingDate = DateTime.Parse(form["Event.ClosingDate"].ToString());
             CurrentStatus = form["Event.CurrentStatus"].ToString();
             Process = process;
+        
         }
 
-        public void UpdateEvent(IFormCollection form, Process process)
+        public void UpdateEvent(IFormCollection form, Process process, ApplicationUser user)
         {
             //Id = int.Parse(form["Event.Id"]);
+            User = user;
             Name = form["Event.Name"];
             Description = form["Event.Description"];
             ProcName = form["Event.ProcName"];
@@ -57,6 +60,7 @@ namespace FullCal.Models
             ClosingDate = DateTime.Parse(form["Event.ClosingDate"]);
             CurrentStatus = form["Event.CurrentStatus"];
             Process = process;
+
         }
 
         public Event()
